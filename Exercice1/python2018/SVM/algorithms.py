@@ -1,5 +1,6 @@
 import time
 import numpy as np
+import math
 import scipy.sparse.linalg as spla
 from numpy.random import randint
 from scipy.sparse.linalg.dsolve import linsolve
@@ -35,11 +36,11 @@ def GD(fx, gradf, parameter):
     for iter in range(maxit):
         tic = time.time()
 
-        x_next = x - alpha*gradf(x)
+
         # Update the next iteration. (main algorithmic steps here!)
         # Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
+        x_next = x - alpha * gradf(x)
 
-        #### YOUR CODES HERE
 
         # Compute error and save data to be plotted later on.
         info['itertime'][iter] = time.time() - tic
@@ -74,6 +75,7 @@ def GDstr(fx, gradf, parameter) :
     print('Gradient Descent  with strong convexity')
 
     # Initialize x and alpha.
+    maxit = parameter['maxit']
     x = parameter['x0']
     #alpha = 2/(L+mu)
     alpha = 2/(parameter['Lips'] + parameter['strcnvx'])
@@ -122,7 +124,12 @@ def AGD(fx, gradf, parameter):
     print('Accelerated Gradient')
 
     # Initialize x, y and t.
-    #### YOUR CODES HERE
+    maxit = parameter['maxit']
+    x = parameter['x0']
+    t = 0
+    y = parameter['x0']
+    alpha = 1/parameter['Lips']
+
 
     info = {'itertime': np.zeros(maxit), 'fx': np.zeros(maxit), 'iter': maxit}
 
@@ -135,7 +142,9 @@ def AGD(fx, gradf, parameter):
         # Update the next iteration. (main algorithmic steps here!)
         # Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
 
-        #### YOUR CODES HERE
+        x_next = y -alpha*gradf(y)
+        t_next = 0.5*(1 + math.sqrt(1 + 4*math.pow(t,2)))
+        y_next = x_next + (t-1)*(x_next-x)/(t_next)
 
         # Compute error and save data to be plotted later on.
         info['itertime'][iter] = time.clock() - tic
@@ -149,6 +158,7 @@ def AGD(fx, gradf, parameter):
         # Prepare next iteration
         x = x_next
         t = t_next
+        y = y_next
 
     return x, info
 
@@ -171,7 +181,14 @@ def AGDstr(fx, gradf, parameter):
     print('Accelerated Gradient with strong convexity')
 
     # Initialize x, y and t.
-    #### YOUR CODES HERE
+    maxit = parameter['maxit']
+    x = parameter['x0']
+    y = parameter['x0']
+    alpha = 1/parameter['Lips']
+    sq_mu = math.sqrt(parameter['strcnvx'])
+    sq_l = math.sqrt(parameter['Lips'])
+    beta = (sq_l - sq_mu)/(sq_l - sq_mu)
+
 
     info = {'itertime': np.zeros(maxit), 'fx': np.zeros(maxit), 'iter': maxit}
 
@@ -184,7 +201,9 @@ def AGDstr(fx, gradf, parameter):
         # Update the next iteration. (main algorithmic steps here!)
         # Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
 
-        #### YOUR CODES HERE
+        x_next = y -alpha*gradf(y)
+
+        y = x_next + beta*(x_next - x)
 
         # Compute error and save data to be plotted later on.
         info['itertime'][iter] = time.clock() - tic

@@ -17,10 +17,10 @@ def main():
     print(68 * '*')
 
     # Choose the solvers you want to call
-    GD_option = 1
+    GD_option = 0
     GDstr_option = 0
     AGD_option = 0
-    AGDstr_option = 0
+    AGDstr_option = 1
     LSGD_option = 0
     LSAGD_option = 0
     AGDR_option = 0
@@ -140,7 +140,7 @@ def main():
     colors_ = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
     colors = [colors_[name] for name in colors_.keys()]
     
-    # plot(figures)
+    figure = plt.figure()
     ax1 = plt.subplot(1, 1, 1)
 
     for key in x.keys():
@@ -173,6 +173,7 @@ def main():
 
     plt.tight_layout()
     plt.show()
+    figure.savefig('{}_figure.png'.format(key))
 
 if __name__ == "__main__":
     main()
