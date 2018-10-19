@@ -15,7 +15,11 @@ function [x, info] = AGD(fx, gradf, parameter)
     
     % Initialize x, y and t.
     
-     %%%% YOUR CODES HERE
+     x = parameter.x0;
+     t = 0;
+     y = parameter.x0;
+     alpha = 1/parameter.Lips;
+     
 
     % Main loop.
     for iter = 1:parameter.maxit
@@ -26,7 +30,9 @@ function [x, info] = AGD(fx, gradf, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
-        %%%% YOUR CODES HERE
+        x_next = y - alpha*gradf(y);
+        t_next = 0.5*(1 + sqrt(1 + 4*(t^2)));
+        y_next = x_next + (t-1)*(x_next-x)/(t_next);
         
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)  = toc;
@@ -41,6 +47,7 @@ function [x, info] = AGD(fx, gradf, parameter)
         % Prepare next iteration
         x           = x_next;
         t           = t_next;
+        y           = y_next;
         
     end
 

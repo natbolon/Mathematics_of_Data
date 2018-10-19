@@ -16,8 +16,9 @@ function [x, info] = GD(fx, gradf, parameter)
         
     % Initialize x and alpha.
     
-     %%%% YOUR CODES HERE
-	    
+    x = parameter.x0;
+    alpha = 1/(parameter.Lips);
+	  
     % Main loop.
     for iter    = 1:parameter.maxit
             
@@ -28,7 +29,7 @@ function [x, info] = GD(fx, gradf, parameter)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
         
-         %%%% YOUR CODES HERE
+         x_next = x -alpha*gradf(x);
        
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)      = toc;

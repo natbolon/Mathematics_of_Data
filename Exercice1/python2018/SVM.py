@@ -17,14 +17,14 @@ def main():
     print(68 * '*')
 
     # Choose the solvers you want to call
-    GD_option = 0
-    GDstr_option = 0
-    AGD_option = 0
+    GD_option = 1
+    GDstr_option = 1
+    AGD_option = 1
     AGDstr_option = 1
-    LSGD_option = 0
-    LSAGD_option = 0
-    AGDR_option = 0
-    LSAGDR_option = 0
+    LSGD_option = 1
+    LSAGD_option = 1
+    AGDR_option = 1
+    LSAGDR_option = 1
     QNM_option = 0
     NM_option = 0
     SGD_option = 0
@@ -140,21 +140,26 @@ def main():
     colors_ = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
     colors = [colors_[name] for name in colors_.keys()]
     
-    figure = plt.figure()
-    ax1 = plt.subplot(1, 1, 1)
 
-    for key in x.keys():
+    ax1 = plt.subplot(1, 2, 1)
+
+    for e, key in enumerate(x.keys()):
+        np.where(np.array(x.keys()) == key)
         if key not in ['SGD', 'SAG', 'SVR']:
-            ax1.plot(np.array(range(1, info[key]['iter']+1)), info[key]['fx'] - fs_star, color=colors[list(x.keys()).index(key)], lw=2, label=key)
-    ax1.legend()
+            ax1.plot(np.array(range(1, info[key]['iter']+1)), info[key]['fx'] - fs_star, \
+                     color=colors[e], lw=2, label=key)
+
     ax1.set_ylim(1e-9, 1e0)
+    ax1.legend()
     ax1.set_xlabel('#iterations')
     ax1.set_ylabel(r'$f(\mathbf{x}^k) - f^\star$')
     ax1.set_xscale('log')
     ax1.set_yscale('log')
     ax1.grid()
 
+
     ax2 = plt.subplot(1, 2, 2)
+
 
     for key in x.keys():
         if key in ['GD', 'SGD', 'SAG', 'SVR']:
@@ -173,7 +178,7 @@ def main():
 
     plt.tight_layout()
     plt.show()
-    figure.savefig('{}_figure.png'.format(key))
+
 
 if __name__ == "__main__":
     main()
