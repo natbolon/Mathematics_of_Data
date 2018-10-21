@@ -503,7 +503,9 @@ def QNM(fx, gradf, parameter):
     # Initialize x, B0, alpha, grad (and any other)
     maxit = parameter['maxit']
     x = parameter['x0']
-    B0 = np.eye()
+    B = np.eye(len(x))
+    Alpha = 10
+    k = 0.1
 
     info = {'itertime': np.zeros(maxit), 'fx': np.zeros(maxit), 'iter': maxit}
 
@@ -514,8 +516,29 @@ def QNM(fx, gradf, parameter):
 
         # Update the next iteration. (main algorithmic steps here!)
         # Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
-        
-        #### YOUR CODES HERE
+
+        d = -1*np.dot(B, gradf(x))
+
+
+        i = 0
+        term_2 = np.dot(gradf(x).T, d)
+
+        while fx(x + 64 * Alpha / (2 ** i) * d) > (fx(x) + k * (64 * Alpha / (2 ** (i +1))) * term_2):
+            i += 1
+
+        #Compute new step size and new point
+        Alpha = 64 * Alpha / (2 ** i)
+        x_next = x + Alpha * d
+
+        #Update Hessian
+        v = gradf(x_next) - gradf(x)
+        s = x_next - x
+        B_aux = np.dot(B, v)
+
+
+
+        B = B - np.dot(B_aux, B_aux.T)/np.dot(v.T, B_aux) + np.dot(s, s.T)/np.dot(s.T, v)
+
 
         # Compute error and save data to be plotted later on.
         info['itertime'][iter] = time.clock() - tic
@@ -524,6 +547,7 @@ def QNM(fx, gradf, parameter):
         # Print the information.
         if (iter % 5 == 0) or (iter == 0):
             print('Iter = {:4d},  f(x) = {:0.9f}'.format(iter, info['fx'][iter]))
+            print('Update on x:', np.dot(s.T, s))
 
         # Prepare the next iteration
         x = x_next
@@ -552,7 +576,7 @@ def NM(fx, gradf, hessf, parameter):
     maxit = parameter['maxit']
     x = parameter['x0']
     Alpha = 10
-
+    k = 0.1
 
     info = {'itertime': np.zeros(maxit), 'fx': np.zeros(maxit), 'iter': maxit}
 
@@ -564,24 +588,16 @@ def NM(fx, gradf, hessf, parameter):
         # Update the next iteration. (main algorithmic steps here!)
         # Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         #Compute d
-        d = spla(hessf(x), -gradf(x))
-        
+        d = spla.spsolve(hessf(x), -gradf(x))
 
-        # Phi = np.dot(hessf(x).T, hessf(x))
-        # y = np.dot(hessf(x), -gradf(x))
-        #
-        # r = np.dot(Phi, x) - y
-        # p = -r
-        # k = 0
-        # x_aux = x
-        # while r != np.zeros(r.shape):
-        #     alp = - np.dot(r.T,p)/np.dot(p.T, np.dot(Phi,p))
-        #     x_aux_next = x_aux + alp*p
-        #     r = np.dot(Phi,x_aux_next) - y
-        #     beta = np.dot(r.T, np.dot(Phi,p)) / np.dot(p.T, np.dot(Phi,p))
-        #     p = - r + beta*p
-        #     k += 1
+        i = 0
+        term_2 = np.dot(gradf(x).T, d)
 
+        while fx(x + 64*Alpha/(2**i)*d) > (fx(x) + k*(64*Alpha/(2**(i+1)))*term_2):
+            i += 1
+
+        Alpha = 64*Alpha/(2**i)
+        x_next = x + Alpha*d
 
         # Compute error and save data to be plotted later on.
         info['itertime'][iter] = time.time() - tic

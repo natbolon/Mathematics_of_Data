@@ -17,15 +17,15 @@ def main():
     print(68 * '*')
 
     # Choose the solvers you want to call
-    GD_option = 1
-    GDstr_option = 1
-    AGD_option = 1
-    AGDstr_option = 1
-    LSGD_option = 1
-    LSAGD_option = 1
-    AGDR_option = 1
-    LSAGDR_option = 1
-    QNM_option = 0
+    GD_option = 0
+    GDstr_option = 0
+    AGD_option = 0
+    AGDstr_option = 0
+    LSGD_option = 0
+    LSAGD_option = 0
+    AGDR_option = 0
+    LSAGDR_option = 0
+    QNM_option = 1
     NM_option = 0
     SGD_option = 0
     SAG_option = 0
