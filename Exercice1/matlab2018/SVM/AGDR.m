@@ -15,7 +15,10 @@ function [x, info] = AGDR(fx, gradf, parameter)
     
     % Initialize x, y, t and find the initial function value (fval).
     
-     %%%% YOUR CODES HERE
+     x = parameter.x0;
+     y = parameter.x0;
+     t = 0;
+     alpha = 1/parameter.Lips;
 
     % Main loop.
     for iter = 1:parameter.maxit
@@ -27,7 +30,16 @@ function [x, info] = AGDR(fx, gradf, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
 		
-         %%%% YOUR CODES HERE
+        x_next = y - alpha*gradf(y);
+        if fx(x) < fx(x_next)
+            t_next = 1;
+            y_next = x;
+            x_next = y_next -alpha*gradf(y_next);
+        else
+            t_next = 0.5*(1 + sqrt(1 + 4*(t^2)));
+            y_next = x_next + (t-1)*(x_next-x)/(t_next);
+        end
+        
 
 		
 		% Compute error and save data to be plotted later on.
@@ -43,6 +55,7 @@ function [x, info] = AGDR(fx, gradf, parameter)
         % Prepare the next iteration
         x   = x_next;
         t   = t_next;
+        y   = y_next;
 
     end
 

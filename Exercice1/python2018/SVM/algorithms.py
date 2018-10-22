@@ -187,7 +187,7 @@ def AGDstr(fx, gradf, parameter):
     alpha = 1/parameter['Lips']
     sq_mu = math.sqrt(parameter['strcnvx'])
     sq_l = math.sqrt(parameter['Lips'])
-    beta = (sq_l - sq_mu)/(sq_l - sq_mu)
+    beta = (sq_l - sq_mu)/(sq_l + sq_mu)
 
 
     info = {'itertime': np.zeros(maxit), 'fx': np.zeros(maxit), 'iter': maxit}
@@ -382,6 +382,7 @@ def AGDR(fx, gradf, parameter):
         # Update the next iteration. (main algorithmic steps here!)
         # Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         x_next = y - Alpha*gradf(y)
+        # MAL --> NO ES EL GRADIENTE! ES LA FUNCION EN SI!
         if np.linalg.norm(gradf(x)) < np.linalg.norm(gradf(x_next)):
             y_next = x
             t_next = 1

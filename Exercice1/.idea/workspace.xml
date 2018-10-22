@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d912de55-e09c-4d3f-88de-256815d20c57" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab2018/SVM.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/AGDR.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/AGDR.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/AGDstr.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/AGDstr.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/LSAGD.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/LSAGD.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/LSAGDR.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/LSAGDR.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/LSGD.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/LSGD.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/NM.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/NM.m" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python2018/SVM.py" beforeDir="false" afterPath="$PROJECT_DIR$/python2018/SVM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python2018/SVM/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/python2018/SVM/algorithms.py" afterDir="false" />
     </list>
@@ -13,7 +19,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Exercice1$SVM.coverage" NAME="SVM Coverage Results" MODIFIED="1540133408403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python2018" />
+    <SUITE FILE_PATH="coverage/Exercice1$SVM.coverage" NAME="SVM Coverage Results" MODIFIED="1540225526877" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python2018" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -33,11 +39,12 @@
     <session id="-2100521404">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.6" value="3" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -54,12 +61,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="4533" />
+          <entry key="py" value="4602" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="4533" />
+          <entry key="Python" value="4602" />
         </counts>
       </usages-collector>
     </session>
@@ -74,11 +81,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/python2018/SVM/algorithms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="549" column="49" selection-start-line="549" selection-start-column="49" selection-end-line="549" selection-end-column="49" />
+            <state relative-caret-position="43">
+              <caret line="593" column="8" lean-forward="true" selection-start-line="593" selection-start-column="8" selection-end-line="600" selection-end-column="28" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1540133408392" expanded="true" signature="14395:14404" ph="..." />
+                <marker date="1540227087274" expanded="true" signature="14454:14463" ph="..." />
               </folding>
             </state>
           </provider>
@@ -87,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python2018/SVM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+            <state relative-caret-position="157">
+              <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -99,7 +106,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python2018/SVM/commons.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
+            <state relative-caret-position="885">
               <caret line="59" selection-start-line="59" selection-end-line="59" />
             </state>
           </provider>
@@ -230,7 +237,7 @@
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49543378" visible="true" weight="0.08885299" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49543378" visible="true" weight="0.08966074" />
       <window_info id="Structure" order="1" sideWeight="0.5045662" side_tool="true" weight="0.08885299" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -249,7 +256,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" weight="0.32956383" />
+      <window_info active="true" anchor="right" id="SciView" order="3" visible="true" weight="0.32956383" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" weight="0.32956383" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32956383" />
       <window_info anchor="right" id="Database" order="6" weight="0.32956383" />
@@ -266,17 +273,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/python2018/SVM/algorithms.py</url>
-          <line>530</line>
+          <line>531</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/python2018/SVM/algorithms.py</url>
-          <line>507</line>
+          <line>508</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/python2018/SVM/algorithms.py</url>
-          <line>506</line>
+          <line>507</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
@@ -348,15 +355,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/python2018/SVM/commons.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
+        <state relative-caret-position="885">
           <caret line="59" selection-start-line="59" selection-end-line="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/python2018/SVM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+        <state relative-caret-position="157">
+          <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -365,11 +372,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/python2018/SVM/algorithms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="549" column="49" selection-start-line="549" selection-start-column="49" selection-end-line="549" selection-end-column="49" />
+        <state relative-caret-position="43">
+          <caret line="593" column="8" lean-forward="true" selection-start-line="593" selection-start-column="8" selection-end-line="600" selection-end-column="28" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <marker date="1540133408392" expanded="true" signature="14395:14404" ph="..." />
+            <marker date="1540227087274" expanded="true" signature="14454:14463" ph="..." />
           </folding>
         </state>
       </provider>

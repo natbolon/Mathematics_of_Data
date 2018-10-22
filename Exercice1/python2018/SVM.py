@@ -22,10 +22,10 @@ def main():
     AGD_option = 0
     AGDstr_option = 0
     LSGD_option = 0
-    LSAGD_option = 0
-    AGDR_option = 0
+    LSAGD_option = 1
+    AGDR_option = 1
     LSAGDR_option = 0
-    QNM_option = 1
+    QNM_option = 0
     NM_option = 0
     SGD_option = 0
     SAG_option = 0

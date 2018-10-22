@@ -14,7 +14,9 @@ function [x, info] = NM(fx, gradf, hessf, parameter)
     fprintf('Newton Method\n')
     
     % Initialize x, alpha (and any other).
-    %%%% YOUR CODES HERE
+    x = parameter.x0;
+    alpha = 10;
+    k = 0.1;
 
     % Main loop.
     for iter = 1:parameter.maxit
@@ -25,7 +27,16 @@ function [x, info] = NM(fx, gradf, hessf, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
 		
-         %%%% YOUR CODES HERE
+        d = pcg(hessf(x),-gradf(x));
+        i = 0;
+        term_2 = gradf(x)'*d;
+
+        while fx(x + 64*alpha/(2^i)*d) > fx(x) +k*alpha/(2^(i+1))*term_2
+            i = i+ 1;
+        end
+
+        alpha = 64*alpha/(2^i);
+        x_next = x + alpha*d;
 
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)  = toc;

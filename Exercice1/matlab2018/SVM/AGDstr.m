@@ -16,7 +16,13 @@ function [x, info] = AGDstr(fx, gradf, parameter)
     
     % Initialize x, y, and gamma.
     
-    %%%% YOUR CODES HERE
+    x = parameter.x0;
+    y = parameter.x0;
+    alpha = 1/parameter.Lips;
+    sq_mu = sqrt(parameter.strcnvx) ;
+    sq_lips = sqrt(parameter.Lips);
+    beta = (sq_lips - sq_mu)/(sq_lips + sq_mu);
+    
 
     % Main loop.
     for iter = 1:parameter.maxit
@@ -27,7 +33,8 @@ function [x, info] = AGDstr(fx, gradf, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
 		
-         %%%% YOUR CODES HERE
+         x_next = y - alpha*gradf(x);
+         y_next = x_next + beta*(x_next - x);
 
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)  = toc;
@@ -41,6 +48,7 @@ function [x, info] = AGDstr(fx, gradf, parameter)
         
         % Prepare next iteration
         x           = x_next;
+        y           = y_next;
         
     end
 

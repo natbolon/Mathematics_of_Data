@@ -15,7 +15,9 @@ function [x, info] = LSGD(fx, gradf, parameter)
 
     % Initialize x, kappa and L0.
    
-     %%%% YOUR CODES HERE
+    x = parameter.x0;
+    L = parameter.Lips;
+    
 
     % Main loop.
     for iter = 1:parameter.maxit
@@ -25,8 +27,15 @@ function [x, info] = LSGD(fx, gradf, parameter)
         
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
+        d = -gradf(x);
+        L0 = 0.5*L;
+        i = 0;
+        while fx(x + (1/(L0*2^i))*d) > fx(x) - (1/(2*L0*2^i))*(norm(d))^2
+            i = i+1;
+        end
         
-         %%%% YOUR CODES HERE
+        x_next = x + (1/(L0*2^i))*d;
+        L = L0*2^i;
 
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)      = toc;
