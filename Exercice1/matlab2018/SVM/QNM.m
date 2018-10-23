@@ -14,12 +14,11 @@ function [x, info] = QNM(fx, gradf, parameter)
     fprintf('Quasi Newton Method\n')
 
     % Initialize x, B0, alpha, grad (and any other)
-	alpha     = 10;
-    kappa     = .1;
-    x         = parameter.x0;
-    Bk        = eye(numel(x));
-    grad      = gradf(x);
-    fval      = fx(x);
+	x       = parameter.x0;
+    alpha   = 10;
+    k       = 0.1;
+    B       = eye(numel(x));
+    
 	    
     % Main loop.
     for iter = 1:parameter.maxit
@@ -31,7 +30,20 @@ function [x, info] = QNM(fx, gradf, parameter)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
         
-         %%%% YOUR CODES HERE
+        d = pcg(B,-gradf(x));
+        i = 0;
+        term_2 = gradf(x)'*d;
+
+        while fx(x + 64*alpha/(2^i)*d) > fx(x) +k*alpha/(2^(i+1))*term_2
+            i = i+ 1;
+        end
+
+        alpha = 64*alpha/(2^i);
+        x_next = x + alpha*d;
+        s = x_next - x;
+        v = gradf(x_next)-gradf(x);
+        Bv = B*v;
+        B_next = B - Bv*(Bv)' / (v'*Bv) + s*s'/(s'*v);
         
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)  = toc;
@@ -43,6 +55,7 @@ function [x, info] = QNM(fx, gradf, parameter)
                 
         % Prepare the next iteration
         x     = x_next;
+        B     = B_next;
 
     end
 

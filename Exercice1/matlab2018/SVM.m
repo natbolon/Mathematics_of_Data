@@ -21,17 +21,17 @@ fprintf('%s\n', repmat('*', 1, 68));
 
 % Choose the solvers you want to call
 solve.GD        = 1;
-solve.GDstr     = 1;
-solve.AGD       = 1;
-solve.AGDstr    = 1;
-solve.LSGD      = 1;
-solve.LSAGD     = 1;
-solve.AGDR      = 1;
-solve.LSAGDR    = 1;
-solve.NM        = 1;
+solve.GDstr     = 0;
+solve.AGD       = 0;
+solve.AGDstr    = 0;
+solve.LSGD      = 0;
+solve.LSAGD     = 0;
+solve.AGDR      = 0;
+solve.LSAGDR    = 0;
+solve.NM        = 0;
 solve.QNM       = 0;
-solve.SGD       = 0;
-solve.SAG       = 0;
+solve.SGD       = 1;
+solve.SAG       = 1;
 solve.SVR       = 0;
 
 

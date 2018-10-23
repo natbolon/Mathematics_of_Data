@@ -16,7 +16,11 @@ function [x, info] = SAG(fx, gradfsto, parameter)
         
         
     % Initialize.
-    %%%% YOUR CODES HERE
+    x = parameter.x0;
+    size_x = size(x);
+    n = parameter.no0functions;
+    v = zeros(size_x(1), n);
+    alpha = 1/(16*parameter.Lips);
 	    
     % Main loop.    
     for iter    = 1:parameter.maxit
@@ -27,7 +31,10 @@ function [x, info] = SAG(fx, gradfsto, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
-         %%%% YOUR CODES HERE
+        i = randi(n);
+        v(:,i) = gradfsto(x,i);
+        %v*ones(n,1) --> sum of v vectors
+        x_next = x - alpha/n * (v*ones(n,1));
        
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)      = toc;

@@ -10,14 +10,15 @@
 %            gradfsto           - stochastic gradient mapping of objective function
 %*************************** LIONS@EPFL ***********************************
 function [x, info] = SGD(fx, gradfsto, parameter)
- 
+    
     fprintf('%s\n', repmat('*', 1, 68));
     fprintf('Stochastic Gradient Descent\n')
         
         
     % Initialize x and alpha.
-    %%%% YOUR CODES HERE
- 
+    x = parameter.x0;
+    n = parameter.no0functions;
+    
     % Main loop.
     for iter    = 1:parameter.maxit
             
@@ -28,7 +29,8 @@ function [x, info] = SGD(fx, gradfsto, parameter)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
         
-         %%%% YOUR CODES HERE
+        i = randi(n);
+        x_next = x - (1/iter)*gradfsto(x,i);
        
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)      = toc;
