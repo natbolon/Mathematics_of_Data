@@ -10,7 +10,7 @@
 %            gradfsto           - stochastic gradient mapping of objective function
 %*************************** LIONS@EPFL ***********************************
 function [x, info] = SGD(fx, gradfsto, parameter)
-    
+ 
     fprintf('%s\n', repmat('*', 1, 68));
     fprintf('Stochastic Gradient Descent\n')
         
@@ -18,7 +18,7 @@ function [x, info] = SGD(fx, gradfsto, parameter)
     % Initialize x and alpha.
     x = parameter.x0;
     n = parameter.no0functions;
-    
+ 
     % Main loop.
     for iter    = 1:parameter.maxit
             

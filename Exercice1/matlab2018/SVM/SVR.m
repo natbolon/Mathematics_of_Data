@@ -22,7 +22,6 @@ function [x, info] = SVR(fx, gradf, gradfsto, parameter)
     gamma = 0.01/parameter.Lips;
     q = round(1000*parameter.Lips,0);
     
-    
     % Main loop.
     for iter    = 1:parameter.maxit
             
@@ -31,7 +30,6 @@ function [x, info] = SVR(fx, gradf, gradfsto, parameter)
        
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation xb_next for x_{k+1}, and xb for x_{k}, and similar for other variables.
-        
         
         v = gradf(x);
         size_x = size(x);

@@ -20,7 +20,7 @@ fprintf('dataset : %s : %d x %d\n',  'breast-cancer', size(A,1), size(A,2))
 fprintf('%s\n', repmat('*', 1, 68));
 
 % Choose the solvers you want to call
-solve.GD        = 1;
+solve.GD        = 0;
 solve.GDstr     = 0;
 solve.AGD       = 0;
 solve.AGDstr    = 0;
@@ -32,7 +32,7 @@ solve.NM        = 0;
 solve.QNM       = 0;
 solve.SGD       = 1;
 solve.SAG       = 1;
-solve.SVR       = 0;
+solve.SVR       = 1;
 
 
 % Set parameters and solve numerically with GD, AGD, AGDR, LSGD, LSAGD, LSAGDR.
@@ -40,13 +40,13 @@ fprintf(strcat('Numerical solution process is started: \n'));
 
 sigma             = 1e-4;
 h                 = 0.5;
-parameter.Lips    = norm(full(A))*norm(full(A'))/ ( 2 * n * h ) + sigma;
+parameter.Lips    = norm(full(A))*norm(full(A'))/ ( 4 * n * h ) + sigma;
 parameter.strcnvx = sigma;
 parameter.x0      = zeros(p, 1);
 parameter.Lmax    = 0;
 
 for i=1:n
-    parameter.Lmax = max(norm(A(i,:))* norm(A(i,:)), parameter.Lmax);
+    parameter.Lmax = max( (1 / (4*h)) * norm(A(i,:))* norm(A(i,:)), parameter.Lmax);
 end
 parameter.Lmax = parameter.Lmax + sigma;
 
@@ -56,14 +56,14 @@ parameter.Lmax = parameter.Lmax + sigma;
 
 %% Call the solvers
 
-parameter.maxit                 = 12000;             
+parameter.maxit                 = 8000;             
 if solve.GD
 [x.GD     , info.GD        ]    = GD     (fx, gradf, parameter);
 e.GD = compute_error(A_test,b_test,x.GD);
 fprintf('Error w.r.t 0-1 loss: %1.3e\n',e.GD);
 end
 
-parameter.maxit                 = 10000;   
+parameter.maxit                 = 8000;   
 if solve.GDstr
 [x.GDstr  , info.GDstr     ]    = GDstr  (fx, gradf, parameter);
 e.GDstr = compute_error(A_test,b_test,x.GDstr);
