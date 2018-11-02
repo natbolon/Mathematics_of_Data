@@ -20,19 +20,19 @@ fprintf('dataset : %s : %d x %d\n',  'breast-cancer', size(A,1), size(A,2))
 fprintf('%s\n', repmat('*', 1, 68));
 
 % Choose the solvers you want to call
-solve.GD        = 0;
-solve.GDstr     = 0;
-solve.AGD       = 0;
-solve.AGDstr    = 0;
-solve.LSGD      = 0;
-solve.LSAGD     = 0;
-solve.AGDR      = 0;
-solve.LSAGDR    = 0;
-solve.NM        = 0;
-solve.QNM       = 0;
-solve.SGD       = 1;
-solve.SAG       = 1;
-solve.SVR       = 1;
+solve.GD        = 1; %seems okey
+solve.GDstr     = 1; %seems okey
+solve.AGD       = 1; %seems okey
+solve.AGDstr    = 1; %review! not working --> sofia
+solve.LSGD      = 1; 
+solve.LSAGD     = 1;
+solve.AGDR      = 1;
+solve.LSAGDR    = 1; %may be okey
+solve.NM        = 1;
+solve.QNM       = 1;
+solve.SGD       = 0; % seems okey
+solve.SAG       = 0; % seems okey
+solve.SVR       = 0; % seems okey
 
 
 % Set parameters and solve numerically with GD, AGD, AGDR, LSGD, LSAGD, LSAGDR.

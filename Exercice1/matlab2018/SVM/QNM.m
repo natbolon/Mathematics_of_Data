@@ -30,7 +30,7 @@ function [x, info] = QNM(fx, gradf, parameter)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
         
-        d = pcg(B,-gradf(x));
+        d = -B*gradf(x);
         i = 0;
         term_2 = gradf(x)'*d;
 

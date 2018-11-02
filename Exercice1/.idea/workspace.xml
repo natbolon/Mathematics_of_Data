@@ -3,14 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d912de55-e09c-4d3f-88de-256815d20c57" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/matlab2018/SVM.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/AGDR.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/AGDR.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/AGDstr.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/AGDstr.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/LSAGD.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/LSAGD.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/LSAGDR.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/LSAGDR.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/LSGD.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/LSGD.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab2018/SVM/NM.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab2018/SVM/NM.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python2018/SVM.py" beforeDir="false" afterPath="$PROJECT_DIR$/python2018/SVM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python2018/SVM/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/python2018/SVM/algorithms.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,12 +31,12 @@
     <session id="-2100521404">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.6" value="3" />
-          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -81,8 +73,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/python2018/SVM/algorithms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="43">
-              <caret line="593" column="8" lean-forward="true" selection-start-line="593" selection-start-column="8" selection-end-line="600" selection-end-column="28" />
+            <state relative-caret-position="8">
+              <caret line="593" column="8" selection-start-line="593" selection-start-column="8" selection-end-line="600" selection-end-column="28" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <marker date="1540227087274" expanded="true" signature="14454:14463" ph="..." />
@@ -94,7 +86,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python2018/SVM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
+            <state relative-caret-position="300">
               <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -235,9 +227,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49543378" visible="true" weight="0.08966074" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49543378" visible="true" weight="0.090468496" />
       <window_info id="Structure" order="1" sideWeight="0.5045662" side_tool="true" weight="0.08885299" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -256,7 +247,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="SciView" order="3" visible="true" weight="0.32956383" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.32956383" />
       <window_info anchor="right" id="R Graphics" order="4" show_stripe_button="false" weight="0.32956383" />
       <window_info anchor="right" id="R Packages" order="5" show_stripe_button="false" weight="0.32956383" />
       <window_info anchor="right" id="Database" order="6" weight="0.32956383" />
@@ -353,16 +344,9 @@
     <entry file="file://$PROJECT_DIR$/python2018/SVM/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/python2018/SVM/commons.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/python2018/SVM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
+        <state relative-caret-position="300">
           <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -370,10 +354,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/python2018/SVM/commons.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/python2018/SVM/algorithms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
-          <caret line="593" column="8" lean-forward="true" selection-start-line="593" selection-start-column="8" selection-end-line="600" selection-end-column="28" />
+        <state relative-caret-position="8">
+          <caret line="593" column="8" selection-start-line="593" selection-start-column="8" selection-end-line="600" selection-end-column="28" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <marker date="1540227087274" expanded="true" signature="14454:14463" ph="..." />
