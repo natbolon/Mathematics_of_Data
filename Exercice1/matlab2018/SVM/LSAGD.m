@@ -30,6 +30,8 @@ function [x, info] = LSAGD(fx, gradf, parameter)
         
         d = -gradf(y);
         L0 = 0.5*L;
+        
+        % Compute step-size
         i = 0;
         
         while fx(y + (1/(L0*2^i))*d) > fx(y) - (1/(L0*2^(i+1)))*norm(d)^2
@@ -39,6 +41,8 @@ function [x, info] = LSAGD(fx, gradf, parameter)
         x_next = y + (1/(L0*2^i))*d;
         t_next = 0.5*(1+sqrt(1+2^(i+1)*t^2));
         y_next = x_next + (t/t_next)*(x_next-x);
+        
+        % Update parameter for step-size
         L = L0*2^i;
         
                       

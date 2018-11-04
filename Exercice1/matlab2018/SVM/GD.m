@@ -16,8 +16,8 @@ function [x, info] = GD(fx, gradf, parameter)
         
     % Initialize x and alpha.
     
-    x = parameter.x0;
-    alpha = 1/(parameter.Lips);
+    x = parameter.x0; %Initialization x_{0}
+    alpha = 1/(parameter.Lips); %Initialization step-size. Constant value
 	  
     % Main loop.
     for iter    = 1:parameter.maxit
@@ -28,8 +28,7 @@ function [x, info] = GD(fx, gradf, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
-        
-         x_next = x -alpha*gradf(x);
+         x_next = x -alpha*gradf(x); 
        
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)      = toc;

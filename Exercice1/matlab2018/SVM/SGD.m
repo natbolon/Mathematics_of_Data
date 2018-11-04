@@ -28,8 +28,9 @@ function [x, info] = SGD(fx, gradfsto, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
-        
+        % Select function 
         i = randi(n);
+        % Update x w.r.t. the stochastic gradient
         x_next = x - (1/iter)*gradfsto(x,i);
        
         % Compute error and save data to be plotted later on.

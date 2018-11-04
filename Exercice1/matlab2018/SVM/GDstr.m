@@ -15,7 +15,7 @@ function [x, info] = GDstr(fx, gradf, parameter)
         
     % Initialize x and alpha.
      x = parameter.x0;
-     alpha = 2/(parameter.Lips + parameter.strcnvx);
+     alpha = 2/(parameter.Lips + parameter.strcnvx); %Define step-size
 	    
     % Main loop.
     for iter    = 1:parameter.maxit

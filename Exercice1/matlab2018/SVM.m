@@ -20,19 +20,19 @@ fprintf('dataset : %s : %d x %d\n',  'breast-cancer', size(A,1), size(A,2))
 fprintf('%s\n', repmat('*', 1, 68));
 
 % Choose the solvers you want to call
-solve.GD        = 1; %seems okey
-solve.GDstr     = 1; %seems okey
-solve.AGD       = 1; %seems okey
-solve.AGDstr    = 1; %review! not working --> sofia
-solve.LSGD      = 1; 
+solve.GD        = 1;
+solve.GDstr     = 1;
+solve.AGD       = 1;
+solve.AGDstr    = 1;
+solve.LSGD      = 1;
 solve.LSAGD     = 1;
 solve.AGDR      = 1;
-solve.LSAGDR    = 1; %may be okey
+solve.LSAGDR    = 1;
 solve.NM        = 1;
 solve.QNM       = 1;
-solve.SGD       = 0; % seems okey
-solve.SAG       = 0; % seems okey
-solve.SVR       = 0; % seems okey
+solve.SGD       = 1;
+solve.SAG       = 1;
+solve.SVR       = 1;
 
 
 % Set parameters and solve numerically with GD, AGD, AGDR, LSGD, LSAGD, LSAGDR.
@@ -209,7 +209,7 @@ ylabel('f(x) - f^*', 'FontSize',20);
 legend(legend_lab, 'FontSize', 15, 'Location', 'best');
 grid on
 
-
+%% 
 % STOCHASTIC PLOT
 
 subplot(1,2,2);       

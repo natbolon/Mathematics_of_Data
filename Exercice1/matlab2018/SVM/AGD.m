@@ -17,8 +17,8 @@ function [x, info] = AGD(fx, gradf, parameter)
     
      x = parameter.x0;
      t = 0;
-     y = parameter.x0;
-     alpha = 1/parameter.Lips;
+     y = parameter.x0; 
+     alpha = 1/parameter.Lips; % Step-size
      
 
     % Main loop.

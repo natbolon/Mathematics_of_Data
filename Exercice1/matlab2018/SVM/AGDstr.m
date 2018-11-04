@@ -18,10 +18,11 @@ function [x, info] = AGDstr(fx, gradf, parameter)
     
     x = parameter.x0;
     y = parameter.x0;
-    alpha = 1/parameter.Lips;
-    sq_mu = sqrt(parameter.strcnvx) ;
+    
+    alpha = 1/(parameter.Lips); % Step-size = 1/L
+    sq_mu = sqrt(parameter.strcnvx) ; 
     sq_lips = sqrt(parameter.Lips);
-    beta = (sq_lips - sq_mu)/(sq_lips + sq_mu);
+    beta = (sq_lips - sq_mu)/(sq_lips + sq_mu); 
     
 
     % Main loop.

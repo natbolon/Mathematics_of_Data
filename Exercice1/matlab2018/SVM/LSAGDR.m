@@ -30,6 +30,8 @@ function [x, info] = LSAGDR(fx, gradf, parameter)
 		
          d = -gradf(y);
          L0 = 0.5*L;
+         
+         %Compute step-size
          i = 0;
 
          while fx(y + (1/(L0*2^i))*d) > fx(y) - (1/(L0*2^(i+1)))*norm(d)^2
@@ -38,6 +40,7 @@ function [x, info] = LSAGDR(fx, gradf, parameter)
          
          x_next = y + (1/(L0*2^i))*d;
          
+         % Restart Gradient value if necessary
          if fx(x) < fx(x_next)
              t_next = 1;
              y_next = x;

@@ -27,7 +27,10 @@ function [x, info] = NM(fx, gradf, hessf, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
 		
+        % Compute Hessian
         d = pcg(hessf(x),-gradf(x));
+        
+        %Compute Step-size
         i = 0;
         term_2 = gradf(x)'*d;
 

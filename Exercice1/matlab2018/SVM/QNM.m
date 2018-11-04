@@ -30,7 +30,9 @@ function [x, info] = QNM(fx, gradf, parameter)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
         
         
-        d = -B*gradf(x);
+        d = -B*gradf(x); % Compute direction
+        
+        %Compute step-size
         i = 0;
         term_2 = gradf(x)'*d;
 
@@ -38,12 +40,12 @@ function [x, info] = QNM(fx, gradf, parameter)
             i = i+ 1;
         end
 
-        alpha = 64*alpha/(2^i);
-        x_next = x + alpha*d;
-        s = x_next - x;
-        v = gradf(x_next)-gradf(x);
+        alpha = 64*alpha/(2^i); %Set new step-size
+        x_next = x + alpha*d; %Update x
+        s = x_next - x; %Update s
+        v = gradf(x_next)-gradf(x); %Update v
         Bv = B*v;
-        B_next = B - Bv*(Bv)' / (v'*Bv) + s*s'/(s'*v);
+        B_next = B - (Bv*(Bv)' / (v'*Bv)) + (s*s'/(s'*v)); %Compute new approximation of the H^-1
         
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)  = toc;

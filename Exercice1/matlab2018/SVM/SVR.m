@@ -31,21 +31,22 @@ function [x, info] = SVR(fx, gradf, gradfsto, parameter)
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation xb_next for x_{k+1}, and xb for x_{k}, and similar for other variables.
         
+        % Full gradient
+        v = gradf(x); 
         
-        v = gradf(x); % Full gradient
-        
+        % Build a Matrix to store of the estimators of x along the iterations
         size_x = size(x);
-        x_bar_l = zeros(size_x(1),q+1);   % Build a Matrix to store of the estimators of x along the iterations
+        x_bar_l = zeros(size_x(1),q+1);   
         x_bar_l(:,1) = x; % Set the first estimator equal to the current value of x
         
         for l = 1:q-1
             
-            i = randi(n); % Pick one coordinate at random
+            i = randi(n); % Select function at random
             v_est = gradfsto(x_bar_l(:,l),i) - gradfsto(x,i) + v; % Update gradient estimator
             x_bar_l(:,l+1) = x_bar_l(:,l) - gamma*v_est; % Update x estimator
         end
         
-        x_next = (1/q)*(x_bar_l(:,2:q+1)*ones(q,1)); %average the estimators of x
+        x_next = (1/q)*(x_bar_l(:,2:q+1)*ones(q,1)); % Average the estimators of x
         
         
         % Compute error and save data to be plotted later on.

@@ -33,6 +33,7 @@ function [x, info] = SAG(fx, gradfsto, parameter)
         
         i = randi(n);
         v(:,i) = gradfsto(x,i);
+        
         %v*ones(n,1) --> sum of v vectors
         x_next = x - alpha/n * (v*ones(n,1));
        

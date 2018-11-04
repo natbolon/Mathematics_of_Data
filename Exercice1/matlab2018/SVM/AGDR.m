@@ -31,6 +31,8 @@ function [x, info] = AGDR(fx, gradf, parameter)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
 		
         x_next = y - alpha*gradf(y);
+        
+        % Restart Gradient value if necessary
         if fx(x) < fx(x_next)
             t_next = 1;
             y_next = x;

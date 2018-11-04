@@ -27,15 +27,19 @@ function [x, info] = LSGD(fx, gradf, parameter)
         
         % Update the next iteration. (main algorithmic steps here!)
         % Use the notation x_next for x_{k+1}, and x for x_{k}, and similar for other variables.
-        d = -gradf(x);
+        
+        d = -gradf(x); %
         L0 = 0.5*L;
+        % Compute step-size
         i = 0;
         while fx(x + (1/(L0*2^i))*d) > fx(x) - (1/(2*L0*2^i))*(norm(d))^2
             i = i+1;
         end
         
         x_next = x + (1/(L0*2^i))*d;
-        L = L0*2^i;
+        
+        % Update parameter for step-size
+        L = L0*2^i; 
 
         % Compute error and save data to be plotted later on.
         info.itertime(iter ,1)      = toc;
