@@ -7,7 +7,7 @@ from util import obtain_dataloader, Autoencoder
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--hidden_dim', type=int, default=100,
+    parser.add_argument('--hidden_dim', type=int, default=50,
         help = 'the dimension of hidden neurons, default = 100')
     parser.add_argument('--activation', type=str, default='relu',
         help = 'the activation function to use, default = "relu", allowed = ["relu", "tanh", "identity", "sigmoid", "negative"]')

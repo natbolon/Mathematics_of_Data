@@ -1,10 +1,12 @@
 from abc import abstractmethod
 import torch
 
+
 class optimizer(object):
     @abstractmethod
     def compute_update(self, gradients):
         raise NotImplementedError('compute_update function is not implemented.')
+
 
 class SGDOptimizer(optimizer):
     def __init__(self, args):
@@ -13,6 +15,7 @@ class SGDOptimizer(optimizer):
     def update(self, model):
         for p in model.parameters():
             p.grad *= self.learning_rate
+
 
 class MomentumSGDOptimizer(optimizer):
     def __init__(self, args):
@@ -28,6 +31,7 @@ class MomentumSGDOptimizer(optimizer):
             self.m[i] = self.rho * self.m[i] + p.grad
             p.grad = self.learning_rate * self.m[i]
 
+
 class AdagradOptimizer(optimizer):
     def __init__(self, args):
         self.delta = args.delta
@@ -39,8 +43,10 @@ class AdagradOptimizer(optimizer):
             self.r = [torch.zeros(p.size()) for p in model.parameters()]
 
         for i, p in enumerate(model.parameters()):
-            ## TODO
-            raise NotImplementedError('You should write your code HERE')
+            self.r[i] = self.r[i] + p.grad * p.grad
+            p.grad = self.learning_rate / (self.delta + torch.sqrt(self.r[i])) * p.grad
+
+            # raise NotImplementedError('You should write your code HERE')
 
 
 class RMSPropOptimizer(optimizer):
@@ -55,8 +61,9 @@ class RMSPropOptimizer(optimizer):
             self.r = [torch.zeros(p.size()) for p in model.parameters()]
 
         for i, p in enumerate(model.parameters()):
-            ## TODO
-            raise NotImplementedError('You should write your code HERE')
+            self.r[i] = self.tau * self.r[i] + (1 - self.tau) * p.grad * p.grad
+            p.grad = self.learning_rate / (self.delta + torch.sqrt(self.r[i])) * p.grad
+            # raise NotImplementedError('You should write your code HERE')
 
 
 class AdamOptimizer(optimizer):
@@ -78,10 +85,14 @@ class AdamOptimizer(optimizer):
             self.iteration = 1
 
         for i, p in enumerate(model.parameters()):
-            ## TODO
-            raise NotImplementedError('You should write your code HERE')
+            self.m1[i] = self.beta1 * self.m1[i] + (1 - self.beta1) * p.grad
+            self.m2[i] = self.beta2 * self.m2[i] + (1 - self.beta2) * p.grad * p.grad
+            m1 = self.m1[i]/(1-self.beta1**(i+1))
+            m2 = self.m2[i]/(1-self.beta2**(i+1))
+            p.grad = self.learning_rate*m1/(self.delta + torch.sqrt(m2))
+            #raise NotImplementedError('You should write your code HERE')
 
-        self.iteration = self.iteration+1
+        self.iteration = self.iteration + 1
 
 
 def createOptimizer(args):

@@ -9,6 +9,7 @@ import numpy as np
 
 from torch.autograd import Variable
 
+
 def obtain_dataloader(batch_size):
     """
     obtain the data loader
@@ -19,11 +20,12 @@ def obtain_dataloader(batch_size):
     test_set = dset.MNIST(root='./data', train=False, transform=trans, download=True)
 
     train_loader = torch.utils.data.DataLoader(
-            dataset=train_set, batch_size=batch_size, shuffle=True)
+        dataset=train_set, batch_size=batch_size, shuffle=True)
     test_loader = torch.utils.data.DataLoader(
-            dataset=test_set, batch_size=batch_size, shuffle=True)
+        dataset=test_set, batch_size=batch_size, shuffle=True)
 
     return train_loader, test_loader
+
 
 class Autoencoder(nn.Module):
     """
@@ -40,20 +42,20 @@ class Autoencoder(nn.Module):
         self.batch_size = batch_size
 
         if activation.lower() in ['relu']:
-            self.activation=lambda x: torch.clamp(x, min = 0.)
-            self.dactivation=lambda x: (torch.sign(x) + 1) / 2
+            self.activation = lambda x: torch.clamp(x, min=0.)
+            self.dactivation = lambda x: (torch.sign(x) + 1) / 2
         elif activation.lower() in ['tanh']:
-            self.activation=lambda x: (torch.exp(x) - torch.exp(-x)) / (torch.exp(x) + torch.exp(-x))
-            self.dactivation=lambda x: 4 / (torch.exp(x) + torch.exp(-x)) ** 2
+            self.activation = lambda x: (torch.exp(x) - torch.exp(-x)) / (torch.exp(x) + torch.exp(-x))
+            self.dactivation = lambda x: 4 / (torch.exp(x) + torch.exp(-x)) ** 2
         elif activation.lower() in ['identity']:
-            self.activation=lambda x: x
-            self.dactivation=lambda x: torch.ones_like(x)
+            self.activation = lambda x: x
+            self.dactivation = lambda x: torch.ones_like(x)
         elif activation.lower() in ['sigmoid', 'sigd']:
-            self.activation=lambda x: 1. / (1. + torch.exp(-x))
-            self.dactivation=lambda x: torch.exp(x) / (1 + torch.exp(x)) ** 2
+            self.activation = lambda x: 1. / (1. + torch.exp(-x))
+            self.dactivation = lambda x: torch.exp(x) / (1 + torch.exp(x)) ** 2
         elif activation.lower() in ['negative']:
-            self.activation=lambda x: -x
-            self.dactivation=lambda x: -torch.ones_like(x)
+            self.activation = lambda x: -x
+            self.dactivation = lambda x: -torch.ones_like(x)
         else:
             raise ValueError('unrecognized activation function')
 
@@ -66,7 +68,7 @@ class Autoencoder(nn.Module):
         """
 
         projection = torch.matmul(data_batch, self.encoder_weight)
-        encode = self.activation(projection) #shape [data_batch, hidden_size]
+        encode = self.activation(projection)  # shape [data_batch, hidden_size]
         decode = torch.matmul(encode, self.decoder_weight)  # of shape [batch_size, output_dim]
 
         hidden_dim = projection.size()[1]
@@ -74,17 +76,16 @@ class Autoencoder(nn.Module):
 
         # Reshape tensors
         projection = projection.unsqueeze_(2).permute(1, 2, 0)  # shape [hidden_size, 1, batch_size]
-        encode = encode.unsqueeze_(2).permute(1, 2, 0) #shape [hidden_size, 1, batch_size]
-        decode = decode.unsqueeze_(2).permute(1, 2, 0) #shape [output_dim, 1, batch_size]
-        self.encoder_weight = self.encoder_weight.unsqueeze_(2).repeat(1, 1, self.batch_size) #shape [input_size, hidden_size, batch_size]
-        self.decoder_weight = self.decoder_weight.unsqueeze_(2).repeat(1, 1, self.batch_size)  # shape [input_size, hidden_size, batch_size]
+        encode = encode.unsqueeze_(2).permute(1, 2, 0)  # shape [hidden_size, 1, batch_size]
+        decode = decode.unsqueeze_(2).permute(1, 2, 0)  # shape [output_dim, 1, batch_size]
+        self.encoder_weight = self.encoder_weight.unsqueeze_(2).repeat(1, 1,
+                                                                       self.batch_size)  # shape [input_size, hidden_size, batch_size]
+        self.decoder_weight = self.decoder_weight.unsqueeze_(2).repeat(1, 1,
+                                                                       self.batch_size)  # shape [input_size, hidden_size, batch_size]
         data_batch = data_batch.unsqueeze_(2).permute(1, 2, 0)
 
         error = decode - data_batch
         loss = torch.mean(torch.sum(error ** 2, dim=2)) / 2
-
-
-        # TODO calculate the gradient and update the weight
 
         # Get data dimensions
         hidden_dim = encode.size()[0]
@@ -93,61 +94,85 @@ class Autoencoder(nn.Module):
         # Derivate activation function
         dact_proj = self.dactivation(projection)
 
-
         # Compute gradient w.r.t. W2
         error_rep = error.expand(error.size()[0], hidden_dim, error.size()[2])
 
         encode_rep = encode.permute(1, 0, 2)
         encode_rep = encode_rep.expand(input_dim, encode_rep.size()[1], encode_rep.size()[2])
 
-        grad_dec = -2*torch.mul(error_rep,encode_rep)
+        grad_dec = -2 * torch.mul(error_rep, encode_rep)
         grad_dec = grad_dec.permute(1, 0, 2)
 
-
-
         # Compute gradient w.r.t. W1
-        # Expand along columns the derivative of the projection
-        # Final shape [Hidden_size, Input_size, Batch_size]
-        dact_proj = dact_proj.expand(dact_proj.size()[0], input_dim, dact_proj.size()[2])
+        """
+        # Step 0. Adjust shapes of W2 and dact_proj to [input_size, hidden_size, batch_size]
+        W2 = self.decoder_weight.permute(1, 0, 2)
+        dact_proj = dact_proj.expand(dact_proj.size()[0], input_dim, dact_proj.size()[2]).permute(1, 0, 2)
 
-        # Expand input. Final shape [Hidden_size, Input_size, Batch_size]
-        input_exp = data_batch.permute(1, 0, 2)
-        input_exp = input_exp.expand(hidden_dim, input_exp.size()[1], input_exp.size()[2])
+        # Step 1. Multiply element-wise both tensors
+        grad_enc = torch.mul(W2, dact_proj)
 
-        grad_enc = torch.mul(dact_proj, input_exp)
+        # Step 2. Multiply matrix-wise error tensor and grad_enc tensor
+        error_rep = error_rep.permute(1, 0, 2)[0:1, :, :]  # Select error vector for each datapoint
 
-        #Compute W2 components on grad_enc
-        # Pick only the first matrix of the tensor
-        w2 = self.decoder_weight[:, : ,0]
+        # Torch dims -- [Depth, rows, cols]
+        error_rep = error_rep.permute(2, 0, 1)
+        grad_enc = grad_enc.permute(2, 0, 1)
+        grad_enc = torch.matmul(error_rep, grad_enc)
 
-        # Sum W2 along rows
-        ones = torch.ones((input_dim, 1))
-        sum_weights = torch.matmul(w2, ones)
-        sum_weights.unsqueeze_(2)
+        # Step 3. Transpose and Expand the matrix product
+        grad_enc = grad_enc.permute(1, 2, 0)
+        grad_enc = grad_enc.expand(input_dim, grad_enc.size()[1], grad_enc.size()[2])
 
-        # Expand. Final shape [Hidden_size, Input_size, Batch_size]
-        sum_weights = sum_weights.expand(sum_weights.size()[0], input_dim, batch_size)
+        # Step 4. Multiply element-wise by datapoints
+        data = data_batch.expand(data_batch.size()[0], hidden_dim, data_batch.size()[2])
+        grad_enc = -2 * torch.mul(grad_enc, data)
+        """
 
-        grad_enc = torch.mul(grad_enc, sum_weights)
+        """
+        
+        # Step 1. -2*W2*e.t
+        grad_enc = -2*torch.matmul(self.decoder_weight.permute(2, 0, 1), error.permute(2, 0, 1))
 
-        error_rep = error_rep.permute(1,0,2)
+        # Step 2. Element-wise multiplication by dact_proj
+        grad_enc = torch.mul(grad_enc, dact_proj.permute(2, 0, 1))
+        grad_enc = grad_enc.expand(grad_enc.size()[0], grad_enc.size()[1], hidden_dim)
 
-        grad_enc = torch.mul(grad_enc, error_rep)
-        grad_enc = grad_enc.permute(1,0,2)
-        grad_enc = -2*grad_enc
+        # Step 3. Matrix multiplication by Input
+        data = data_batch.permute(2, 0, 1)
+        grad_enc = torch.matmul(data.expand(data.size()[0], data.size()[1], hidden_dim), grad_enc)
+        
+        """
+        # Step 1.
+        e = error.permute(2, 1, 0)
+        w2 = self.decoder_weight.permute(2, 1, 0)
+        grad_enc = torch.matmul(e,w2)
+        grad_enc = grad_enc.expand(grad_enc.size()[0], input_dim, grad_enc.size()[2])
+
+        # Step 2
+        der = dact_proj.permute(2, 1, 0)
+        der = der.expand(der.size()[0], input_dim, der.size()[2])
+        grad_enc = torch.mul(grad_enc, der)
+
+        # Step 3
+        data = data_batch.permute(2, 0, 1)
+        data = data.expand(data.size()[0], data.size()[1], hidden_dim)
+        grad_enc = torch.mul(grad_enc, data)
+
+        # Step 4
+        grad_enc = -2*grad_enc.permute(1, 2, 0)
 
 
         # Update W2 --- SEEMS TO BE WORKING!
-
-        # TODO MAKE AVERAGE ALONG DEPTH! DO NOT TAKE FIRST SLIDE!
         self.decoder_weight += step_size * grad_dec
         self.decoder_weight = torch.mean(self.decoder_weight, dim=2)
+        # self.decoder_weight = self.decoder_weight[:,:,0]
 
+        # Update W1
+        self.encoder_weight += -step_size * grad_enc
+        self.encoder_weight = torch.mean(self.encoder_weight, dim=2)
 
-        #Update W1
-        #self.encoder_weight += step_size*grad_enc
-        #self.encoder_weight = torch.mean(self.encoder_weight, dim=2)
-        self.encoder_weight = self.encoder_weight[:,:,0]
+        # self.encoder_weight = self.encoder_weight[:, :, 0]
 
         print loss
         return float(loss)
@@ -190,8 +215,8 @@ class Autoencoder(nn.Module):
         save the model
         """
         pickle.dump(
-                [np.array(self.encoder_weight), np.array(self.decoder_weight)],
-                open(file2dump, 'wb'))
+            [np.array(self.encoder_weight), np.array(self.decoder_weight)],
+            open(file2dump, 'wb'))
 
     def load_model(self, file2load):
         """

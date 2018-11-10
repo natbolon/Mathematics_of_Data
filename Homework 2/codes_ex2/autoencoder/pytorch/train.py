@@ -40,10 +40,11 @@ if __name__ == '__main__':
 
         loss_list = []
         for idx, (data_batch, label_batch) in enumerate(train_loader, 0):
-            # print 'Iteration #', idx
             data_batch = data_batch.view(batch_size, -1)
             loss = model.train(data_batch, step_size)
             loss_list.append(loss)
+            if idx%25 == 0:
+                print 'Iteration %d with loss: %1.3e'%(idx+1, loss)
         loss_mean = np.mean(loss_list)
         print('Train loss after epoch %d: %1.3e'%(epoch_idx + 1, loss_mean))
         train_loss_list.append(loss_mean)
