@@ -92,9 +92,9 @@ def main(args):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument('--optimizer', type=str, default="sgd",  help='Name of the optimizer: sgd,\
+    parser.add_argument('--optimizer', type=str, default="momentumsgd",  help='Name of the optimizer: sgd,\
        momentumsgd, adam, adagrad, rmsprop')
-    parser.add_argument('--learning_rate', type=float, default=1e-4, help='Learning rate')
+    parser.add_argument('--learning_rate', type=float, default=0.5, help='Learning rate')
     parser.add_argument('--training_epochs', type=int, default=15, help='Number of training epochs')
     parser.add_argument('--batch_size', type=int, default=100, help='Number of batch sizes')
     parser.add_argument('--delta', type=float, default=1e-8, help='The camping coefficient')

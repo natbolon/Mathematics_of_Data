@@ -2,16 +2,17 @@ import torch
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 from util import obtain_dataloader, Autoencoder
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--hidden_dim', type=int, default=50,
+    parser.add_argument('--hidden_dim', type=int, default=100,
         help = 'the dimension of hidden neurons, default = 100')
     parser.add_argument('--activation', type=str, default='relu',
         help = 'the activation function to use, default = "relu", allowed = ["relu", "tanh", "identity", "sigmoid", "negative"]')
-    parser.add_argument('--load_file', type=str, default="model.ckpt",
+    parser.add_argument('--load_file', type=str, default="model-70-100-relu.ckpt",
         help = 'the file to be loaded, default = "model.ckpt"')
     parser.add_argument('--image_shown', type=int, default=4,
         help = 'the number of images shown, default = 4')
@@ -26,6 +27,9 @@ if __name__ == '__main__':
     image_shown = args.image_shown
 
     # obtain the data loader
+
+    random.seed(999)
+    torch.manual_seed(999)
     train_loader, test_loader = obtain_dataloader(image_shown)
 
     model = Autoencoder(image_shown, input_dim, hidden_dim, output_dim, activation)
@@ -48,4 +52,7 @@ if __name__ == '__main__':
         plt.xticks([])
         plt.yticks([])
 
+    file_name = load_file[:-5] + '.eps'
+    #file_name = str(load_file)[:-9] + str(load_file[-6]) + '.eps'
+    plt.savefig('Pictures2/'+file_name)
     plt.show()
