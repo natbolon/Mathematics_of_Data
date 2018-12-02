@@ -84,24 +84,32 @@ I_prox       = TV_prox(I, 'lambda', reg_tv, 'maxiter', prox_tv_maxiters, 'tol', 
 
 
 
-figure,
+f = figure,
 fontsize = 16;
 % Original Image
-subplot(141),
+%subplot(141),
 imagesc(I,[min(I(:)), max(I(:))]), axis image off, colormap gray
 title('Original','fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-best/original-l1.eps')
+
 % Noisy Image
-subplot(142),
+f = figure
+% subplot(142)
 imagesc(y,[min(y(:)), max(y(:))]), axis image off, colormap gray
 title(strcat('NOISY - PSNR =',num2str(psnr_y)),'fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-best/noisy.eps')
 % L1 image
-subplot(143)
-imagesc(I_2,[min(I_2(:)), max(I_2(:))]), axis image off
+f = figure
+%subplot(143)
+imagesc(I_2,[min(I_2(:)), max(I_2(:))]), axis image off, colormap gray
 title(strcat('L1 - PSNR =',num2str(m_l1)),'fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-best/l1.eps')
 % TV image
-subplot(144)
-imagesc(I_prox,[min(I_prox(:)), max(I_prox(:))]), axis image off
+f = figure
+%subplot(144)
+imagesc(I_prox,[min(I_prox(:)), max(I_prox(:))]), axis image off, colormap gray
 title(strcat('TV - PSNR =',num2str(m_tv)),'fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-best/tv.eps')
 
 
 %% Effect very small and large regularizers l1

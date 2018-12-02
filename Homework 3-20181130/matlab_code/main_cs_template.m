@@ -1,5 +1,5 @@
 %% Problem size - image side
-addpath('export_fig');
+% addpath('export_fig');
 addpath('utilities/');
 load('IMAGES/brain.mat')
 load('IMAGES/indices_brain.mat')
@@ -43,7 +43,7 @@ adjoint_operator                = @(x) representation_operator(measurement_backw
 Lips    = 1;
 
 % Generate measurements on complex domain and transfer to real domain
-y       = [real(measurement_forward(f)), imag(measurement_forward(f))];
+y       = [real(measurement_forward(f)); imag(measurement_forward(f))];
 
 % Optimization parameters
 maxit = 100;
@@ -53,14 +53,15 @@ tolx  = 1e-5;
 % regularization parameter
 regularization_parameter_lasso  = 0.0005;
 % Initial point
-x0      = f;
+% Generate random complex values and transfer to real domain
+x0          = [rand(m,m); rand(m,m)];
 
-fx      = @(x) 0.5*(norm(y(:,1) -real(forward_operator(real(x))) + imag(forward_operator(imag(x))),2)^2 ...
-        + norm(y(:,2) -imag(forward_operator(real(x))) - real(forward_operator(imag(x))),2)^2);
-gx      = @(x) regularization_parameter_lasso*norm(x,1);
-proxg   = @(x, gamma) proxL1norm_complex(x, regularization_parameter_lasso*gamma);
+fx          = @(x) 0.5*norm( y(1:size(ind,1)) - real(forward_operator(x(1:m,:))) + imag(forward_operator(x(m+1:end, :))),2)^2 + ...
+            0.5*norm(y(size(ind,1) +1:end) - imag(forward_operator(x(1:m, :))) - real(forward_operator(x(m+1:end, :))),2)^2;
+gx          = @(x) regularization_parameter_lasso*norm(x,1);
+proxg       = @(x, gamma) proxL1norm_complex(x, regularization_parameter_lasso*gamma);
 
-gradf = @(x) fx(x);
+gradf       = @(x) gradient_f(y, forward_operator, adjoint_operator, x);
 
 
 time_wav    = tic;
