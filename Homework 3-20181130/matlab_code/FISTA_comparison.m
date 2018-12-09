@@ -1,5 +1,6 @@
-function [f_wav, theta_k] = FISTA(fx, gx, gradf, proxg, x0, Lips, maxit, tolx)
-    
+function [f_wav, theta_k] = FISTA_comparison(fx, gx, gradf, proxg, x0, Lips, maxit, tolx, b ,ind)
+    p = size(ind);
+
     % Initialize parameters
     theta_k     = 1;
     theta_old   = 1;
@@ -16,15 +17,15 @@ function [f_wav, theta_k] = FISTA(fx, gx, gradf, proxg, x0, Lips, maxit, tolx)
     for k=1:maxit
        
         y     = x_k + theta_k*((1/theta_old) -1)*(x_k-x_old);
-        x_new = proxg(y - lambda*gradf(y), gamma);
+        x_new = proxg(y - lambda*gradf(y, b, ind), gamma);
         
         % Check restart conditions
-        if fx(x_new)+gx(x_new) - fx(x_k)- gx(x_k) > tolx
+        if fx(x_new, b, ind, p)+gx(x_new) - fx(x_k, b, ind, p)- gx(x_k) > tolx
             
             theta_k     = 1;
             theta_old   = 1;
             y           = x_k;
-            x_new       = proxg(y - lambda*gradf(y), gamma);
+            x_new       = proxg(y - lambda*gradf(y, b, ind), gamma);
         end
         
         theta_old   = theta_k;

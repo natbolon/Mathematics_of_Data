@@ -1,4 +1,9 @@
-%% Problem size - image side
+
+%%%%%%%%%%%%%%%%%%%%
+%%% Exercise 2.3 %%%
+%%%%%%%%%%%%%%%%%%%%
+
+%% Paths
 addpath('export_fig');
 addpath('utilities/');
 addpath('IMAGES/')
