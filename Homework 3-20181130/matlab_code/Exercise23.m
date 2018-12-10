@@ -1,10 +1,9 @@
 
-%%%%%%%%%%%%%%%%%%%%
-%%% Exercise 2.3 %%%
-%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Exercise    2.3 & 2.4                Denoising Images%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Paths
-addpath('export_fig');
 addpath('utilities/');
 addpath('IMAGES/')
 
@@ -30,8 +29,8 @@ WT          = @(x) midwt(x,wav,level);
 % Wavelet transform -  From image to wavelet coefficient
 W           = @(x) mdwt(x,wav,level); 
 
-% Define PSNR 
-psnr_f      = @(I, I_trans) 20*log10(max(max(I))/sqrt(norm(I - I_trans, 'fro')));  
+%% Define PSNR 
+psnr_f        = @(I, I_trans) 20*log10(max(max(I))/sqrt((1/N)*norm(I - I_trans, 'fro')^2));
 
 
 %% Lasso & TV approximations
@@ -41,7 +40,7 @@ prox_tv_tol      = 1e-5;
 psnr_l1          = [];
 psnr_tv          = [];
 
-regs             = linspace(1,20,50);
+regs             = logspace(-5,5,20);
 
 for i=1:length(regs)
     
@@ -123,25 +122,28 @@ f = figure;
 fontsize = 13;
 % Original Image
 imagesc(I,[min(I(:)), max(I(:))]), axis image off, colormap gray
-%title('Original','fontsize',fontsize,'interpreter','latex');
-saveas(f, 'original-l1.eps')
+title('Original','fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-23/original-l1.eps')
 
 % Noisy
 f = figure;
 fontsize = 13;
 imagesc(y,[min(y(:)), max(y(:))]), axis image off, colormap gray
-%title('Noisy ','fontsize',fontsize,'interpreter','latex');
-saveas(f, 'noisy-l1.eps')
+title('Noisy ','fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-23/noisy-l1.eps')
+
 % Best
 f = figure;
 fontsize = 13;
 reg = 9.5306;
+
 % Compute L1 approximation
 alpha       = proxL1norm(W(y),reg);
 I_2         = WT(alpha);
 imagesc(I_2,[min(I_2(:)), max(I_2(:))]), axis image off, colormap gray
-%title('Best result L1 ','fontsize',fontsize,'interpreter','latex');
-saveas(f, 'best-l1.eps')
+t = strcat('Best result L1 ', strcat(' PSNR= ', num2str(psnr_f(I,I_2))));
+title(t,'fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-23/best-l1.eps')
 
 regs = [1e-3, 1e-2, 1e2, 1e3, 1e4];
 
@@ -154,16 +156,18 @@ for i=1:length(regs)
     alpha       = proxL1norm(W(y),reg);
     I_2         = WT(alpha);
     imagesc(I_2,[min(I_2(:)), max(I_2(:))]), axis image off, colormap gray
-    %title(strcat('Regularizer = ', num2str(reg)),'fontsize',fontsize,'interpreter','latex');
-    saveas(f, strcat(num2str(reg), 'l1.eps'))
+    t = strcat(strcat('Regularizer = ', num2str(reg)), strcat(' PSNR= ', num2str(psnr_f(I,I_2))));
+    title(t,'fontsize',fontsize,'interpreter','latex');
+    saveas(f, strcat('Images-23/',strcat(num2str(reg), 'l1.eps')))
 end
 
 %% Effect very small and large regularizers TV
 
 
 imagesc(I_prox,[min(I_prox(:)), max(I_prox(:))]), axis image off, colormap gray
-%title('Best result TV ','fontsize',fontsize,'interpreter','latex');
-saveas(f, 'best-tv.eps')
+t = strcat('Best result TV ', strcat(' PSNR= ', num2str(psnr_f(I,I_prox))));
+title('Best result TV ','fontsize',fontsize,'interpreter','latex');
+saveas(f, 'Images-23/best-tv.eps')
 
 
 regs = [1e-3, 1e-2, 1e2, 1e3, 1e4];
@@ -178,8 +182,9 @@ for i=1:length(regs)
 
     
     imagesc(I_prox,[min(I_prox(:)), max(I_prox(:))]), axis image off, colormap gray
-    %title(strcat('Regularizer = ', num2str(reg)),'fontsize',fontsize,'interpreter','latex');
-    saveas(f, strcat(num2str(reg), 'tv.eps'))
+    t = strcat(strcat('Regularizer = ', num2str(reg)), strcat(' PSNR= ', num2str(psnr_f(I,I_prox))));
+    title(t,'fontsize',fontsize,'interpreter','latex');
+    saveas(f, strcat('Images-23/',strcat(num2str(reg), 'tv.eps')))
 end
 
 

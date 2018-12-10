@@ -49,7 +49,7 @@ adjoint_operator                = @(x,indices) representation_operator(measureme
 
 %% Define PSNR 
 
-psnr        = @(I, I_trans) 20*log10(max(max(I))/sqrt((1/N)*norm(I - I_trans)^2));
+psnr        = @(I, I_trans) 20*log10(max(max(I))/sqrt((1/N)*norm(I - I_trans, 'fro')^2));
     
 %% Define Operators
 fx          = @(x,b, ind, p) 0.5*norm( b(1:p) - real(forward_operator(x(1:N), ind)) + imag(forward_operator(x(N+1:end), ind)),2)^2 + ...
@@ -90,9 +90,12 @@ time_wav    = toc(time_wav)
 F = representation_operator_trans(f_wav(1:N) + 1i*f_wav(N+1:end));
 F = reshape(F, [m,m]);
 
+f_abs = sqrt(real(f)^2 + imag(f)^2);
+f_wav_abs = sqrt(real(F)^2 + imag(F)^2);
 % Compute PSNR 
 psnr_linear = abs(psnr(f, x_rec_lin));
-psnr_wav    = abs(psnr(f, F));
+psnr_wav    = abs(psnr(f, F))
+psnr_wav_abs    = psnr(f_abs, f_wav_abs)
 
 % Plot Result and save Image
 fig         = figure;

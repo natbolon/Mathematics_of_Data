@@ -20,13 +20,19 @@ function [f_wav, theta_k] = FISTA_comparison(fx, gx, gradf, proxg, x0, Lips, max
         x_new = proxg(y - lambda*gradf(y, b, ind), gamma);
         
         % Check restart conditions
-        if fx(x_new, b, ind, p)+gx(x_new) - fx(x_k, b, ind, p)- gx(x_k) > tolx
-            
+        %disp(strcat('F_new = ', num2str(fx(x_new, b, ind, p)+gx(x_new))))
+        %disp(strcat('f-next ', num2str(fx(x_new, b, ind, p))))
+        %disp(strcat('g-next ', num2str( gx(x_new))))
+        if fx(x_new, b, ind, p)+gx(x_new) > fx(x_k, b, ind, p)+ gx(x_k)  
+            disp('restart');
             theta_k     = 1;
             theta_old   = 1;
             y           = x_k;
-            x_new       = proxg(y - lambda*gradf(y, b, ind), gamma);
+            x_new       = proxg(y - lambda*gradf(y, b, ind), gamma)
+            x_val = proxg(y - lambda*gradf(x_k, b, ind), gamma)
         end
+        
+        
         
         theta_old   = theta_k;
         theta_k     = (sqrt(theta_k^4 + 4*theta_k^2) - theta_k^2)/2;

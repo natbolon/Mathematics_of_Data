@@ -43,7 +43,7 @@ adjoint_operator                = @(x) representation_operator(measurement_backw
 
 %% Define PSNR 
 
-psnr    = @(I, I_trans) 20*log10(max(max(I))/sqrt((1/N)*norm(I - I_trans)^2));
+psnr    = @(I, I_trans) 20*log10(max(max(I))/sqrt((1/N)*norm(I - I_trans,'fro')^2));
 %%
 Lips    = 1;
 
@@ -58,6 +58,7 @@ tolx  = 1e-5;
 
 PSNR_list   = [];
 regs        = logspace(-9,-0.1,15);
+%regs = 0.005;
 % Initial point
 x0          = [zeros(N,1); zeros(N,1)]; % Vector size [2*m*m]
 
@@ -85,20 +86,20 @@ for k=1:length(regs)
   
     %%%%% IMPORTANT__ HOW TO OCMPUTE PSNR WITH COMPLEX VALUE?? ¿?
     % Compute PSNR
-    PSNR_list = [PSNR_list; abs(psnr(f, F))];
+    PSNR_list = [PSNR_list; abs(psnr(sqrt(real(f).^2 + imag(f).^2), sqrt(real(F).^2 + imag(F).^2)))]
 
-    %% VISUALIZE results
-    fig = figure;
-    fontsize = 16;
-
-    imagesc(abs(F),[min(abs(F(:))), max(abs(F(:)))])
-    t = strcat(strcat('Regularizer = ', num2str(regularization_parameter_lasso)), strcat(' PSNR = ', num2str(psnr_f)));
-    title(t,'fontsize',fontsize,'interpreter','latex');
-    file_name  = strcat('Images-33/', num2str(k));
-    saveas(fig, file_name, 'epsc');
-    
-    % Set warm start
-    x0 = f_wav; 
+%     %% VISUALIZE results
+%     fig = figure;
+%     fontsize = 16;
+% 
+%     imagesc(abs(F),[min(abs(F(:))), max(abs(F(:)))])
+%     t = strcat(strcat('Regularizer = ', num2str(regularization_parameter_lasso)), strcat(' PSNR = ', num2str(psnr_f)));
+%     title(t,'fontsize',fontsize,'interpreter','latex');
+%     file_name  = strcat('Images-33/', num2str(k));
+%     saveas(fig, file_name, 'epsc');
+%     
+%     % Set warm start
+%     x0 = f_wav; 
 end
 
 %% Visualize effect of regularizer parameter
